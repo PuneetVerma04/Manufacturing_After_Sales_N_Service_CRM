@@ -43,7 +43,4 @@ This CRM reduces **service delays**, improves **SLA compliance**, and enhances *
 - Flows & Process Automation  
 - Experience Cloud (Customer Portal)  
 
----
-
-## 📂 Repository Structure (suggested)
 
