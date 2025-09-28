@@ -1,0 +1,9 @@
+Name,Subject__c,Customer_Name__c,Customer_Email__c,Customer_Address__c,Customer_Location__Latitude__s,Customer_Location__Longitude__s,Registered_Product__r.Registered_Product__c-Name,Priority__c,Required_Skill__c,Status__c,SLA_Deadline__c
+"Case-001","No Power","Rohit Sharma","rohit.sharma@example.com","Sector 14, Gurgaon",28.4595,77.0266,"AC Model A1","High","Electronics","New","2025-09-27 12:00:00"
+"Case-002","Leaking","Priya Mehta","priya.mehta@example.com","Andheri West, Mumbai",19.1190,72.8460,"Pump P12","Medium","Mechanical","New","2025-09-29 15:00:00"
+"Case-003","No Display","Ankit Verma","ankit.verma@example.com","Koramangala, Bangalore",12.9352,77.6245,"Controller C7","Low","Software","New","2025-10-02 10:00:00"
+"Case-004","Overheating","Sneha Kapoor","sneha.kapoor@example.com","T.Nagar, Chennai",13.0100,80.2329,"Heater H2","High","Maintenance","In Progress","2025-09-27 18:00:00"
+"Case-005","Sensor Fault","Deepak Kumar","deepak.kumar@example.com","Paldi, Ahmedabad",23.0260,72.5177,"Sensor S9","High","Electronics","New","2025-09-28 09:30:00"
+"Case-006","Installation Required","Reena Das","reena.das@example.com","Salt Lake, Kolkata",22.5800,88.4200,"Inverter I4","Medium","Installation","New","2025-10-01 11:00:00"
+"Case-007","Strange Noise","Rajiv Singh","rajiv.singh@example.com","Sector 5, Noida",28.5746,77.3548,"Water Pump W100","Medium","Mechanical","New","2025-09-30 16:00:00"
+"Case-008","Warranty Claim","Kamal Gupta","kamal.gupta@example.com","Saket, New Delhi",28.5245,77.2100,"AC Model A2","High","Electronics","New","2025-09-28 14:00:00"

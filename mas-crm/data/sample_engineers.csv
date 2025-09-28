@@ -1,0 +1,7 @@
+Name,Engineer_Email__c,Available__c,Location__Latitude__s,Location__Longitude__s,Skills__c
+"Ajay Kumar","ajay.kumar@example.com",TRUE,28.6139,77.2090,"Electronics;Maintenance"
+"Priya Singh","priya.singh@example.com",TRUE,19.0760,72.8777,"Installation;Mechanical"
+"Ramesh Patel","ramesh.patel@example.com",FALSE,22.5726,88.3639,"Software;Electronics"
+"Sunita Rao","sunita.rao@example.com",TRUE,12.9716,77.5946,"Installation;Maintenance"
+"Vikram Shah","vikram.shah@example.com",TRUE,13.0827,80.2707,"Mechanical;Electronics"
+"Kavita Desai","kavita.desai@example.com",TRUE,23.0225,72.5714,"Electronics;Software"

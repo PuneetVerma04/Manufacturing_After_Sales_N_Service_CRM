@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="Welcome to Customer Portal">
+        <div class="slds-m-around_medium">
+
+            <lightning-input label="Customer Name"
+                             value={serviceRequest.customerName}
+                             onchange={handleInputChange}
+                             data-field="customerName"
+                             disabled></lightning-input>
+
+            <lightning-input type="email" label="Customer Email"
+                             value={serviceRequest.customerEmail}
+                             onchange={handleInputChange}
+                             data-field="customerEmail"
+                             disabled></lightning-input>
+
+            <lightning-input label="Subject"
+                             value={serviceRequest.subject}
+                             onchange={handleInputChange}
+                             data-field="subject"
+                             required></lightning-input>
+                             
+            <lightning-textarea label="Description"
+                                value={serviceRequest.description}
+                                onchange={handleInputChange}
+                                data-field="description"></lightning-textarea>
+
+            <lightning-combobox label="Select Registered Product"
+                                value={serviceRequest.registeredProductId}
+                                options={products}
+                                onchange={handleInputChange}
+                                data-field="registeredProductId"
+                                required></lightning-combobox>
+
+            <lightning-button variant="brand"
+                              label="Submit"
+                              onclick={handleSubmit}
+                              class="slds-m-top_medium"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

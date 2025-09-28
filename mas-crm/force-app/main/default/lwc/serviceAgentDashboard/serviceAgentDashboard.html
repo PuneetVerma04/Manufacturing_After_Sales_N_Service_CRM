@@ -1,0 +1,217 @@
+<template>
+    <lightning-card title="Service Agent Dashboard" icon-name="standard:service_agent">
+        <div class="slds-p-around_medium">
+            <!-- Quick Stats Row -->
+            <div class="slds-grid slds-gutters slds-m-bottom_large">
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-box slds-theme_shade slds-text-align_center">
+                        <div class="slds-text-heading_large slds-text-color_success">{totalCases}</div>
+                        <div class="slds-text-body_small">Total Cases</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-box slds-theme_shade slds-text-align_center">
+                        <div class="slds-text-heading_large slds-text-color_warning">{openCases}</div>
+                        <div class="slds-text-body_small">Open Cases</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-box slds-theme_shade slds-text-align_center">
+                        <div class="slds-text-heading_large slds-text-color_info">{slaBreached}</div>
+                        <div class="slds-text-body_small">SLA Breached</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-box slds-theme_shade slds-text-align_center">
+                        <div class="slds-text-heading_large slds-text-color_success">{avgRating}</div>
+                        <div class="slds-text-body_small">Avg Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="slds-grid slds-gutters slds-m-bottom_large">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="Create New Case" onclick={createNewCase} 
+                                    variant="brand" icon-name="utility:add" 
+                                    class="slds-button_stretch"></lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="View All Cases" onclick={viewAllCases} 
+                                    variant="neutral" icon-name="utility:list" 
+                                    class="slds-button_stretch"></lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="Product Lookup" onclick={productLookup} 
+                                    variant="neutral" icon-name="utility:search" 
+                                    class="slds-button_stretch"></lightning-button>
+                </div>
+            </div>
+
+            <!-- Main Content Tabs -->
+            <div class="slds-tabs_default">
+                <ul class="slds-tabs_default__nav" role="tablist">
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" 
+                           onclick={switchTab} data-tab="recent-cases">Recent Cases</a>
+                    </li>
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" 
+                           onclick={switchTab} data-tab="feedback">Recent Feedback</a>
+                    </li>
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" 
+                           onclick={switchTab} data-tab="products">Product Status</a>
+                    </li>
+                </ul>
+
+                <!-- Recent Cases Tab -->
+                <div if:true={showRecentCases} class="slds-tabs_default__content">
+                    <div class="slds-box">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Recent Service Cases</h3>
+                        <template if:true={recentCases}>
+                            <template if:true={recentCases.length}>
+                                <div class="slds-scrollable_y">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="slds-text-title_caps">Case Number</th>
+                                                <th class="slds-text-title_caps">Customer</th>
+                                                <th class="slds-text-title_caps">Subject</th>
+                                                <th class="slds-text-title_caps">Status</th>
+                                                <th class="slds-text-title_caps">Priority</th>
+                                                <th class="slds-text-title_caps">Created</th>
+                                                <th class="slds-text-title_caps">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={recentCases} for:item="caseItem">
+                                                <tr key={caseItem.Id} class={caseItem.statusClass}>
+                                                    <td data-label="Case Number">
+                                                        <a href={caseItem.caseUrl} target="_blank">{caseItem.Name}</a>
+                                                    </td>
+                                                    <td data-label="Customer">{caseItem.Customer_Name__c}</td>
+                                                    <td data-label="Subject">{caseItem.Subject__c}</td>
+                                                    <td data-label="Status">
+                                                        <span class={caseItem.statusBadge}>{caseItem.Status__c}</span>
+                                                    </td>
+                                                    <td data-label="Priority">
+                                                        <span class={caseItem.priorityBadge}>{caseItem.Priority__c}</span>
+                                                    </td>
+                                                    <td data-label="Created">{caseItem.createdDateFormatted}</td>
+                                                    <td data-label="Actions">
+                                                        <lightning-button-group>
+                                                            <lightning-button label="Edit" onclick={editCase} 
+                                                                            data-case-id={caseItem.Id} variant="neutral" 
+                                                                            size="small"></lightning-button>
+                                                            <lightning-button label="View" onclick={viewCase} 
+                                                                            data-case-id={caseItem.Id} variant="neutral" 
+                                                                            size="small"></lightning-button>
+                                                        </lightning-button-group>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
+                            <template if:false={recentCases.length}>
+                                <p class="slds-text-align_center slds-p-vertical_large">No recent cases found.</p>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Recent Feedback Tab -->
+                <div if:true={showFeedback} class="slds-tabs_default__content">
+                    <div class="slds-box">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Recent Customer Feedback</h3>
+                        <template if:true={recentFeedback}>
+                            <template if:true={recentFeedback.length}>
+                                <div class="slds-scrollable_y">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="slds-text-title_caps">Feedback ID</th>
+                                                <th class="slds-text-title_caps">Case Number</th>
+                                                <th class="slds-text-title_caps">Rating</th>
+                                                <th class="slds-text-title_caps">Comments</th>
+                                                <th class="slds-text-title_caps">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={recentFeedback} for:item="feedback">
+                                                <tr key={feedback.Id}>
+                                                    <td data-label="Feedback ID">{feedback.Name}</td>
+                                                    <td data-label="Case Number">
+                                                        <a href={feedback.caseUrl} target="_blank">{feedback.Service_Case__r.Name}</a>
+                                                    </td>
+                                                    <td data-label="Rating">
+                                                        <span class={feedback.ratingClass}>{feedback.Rating__c}/5</span>
+                                                    </td>
+                                                    <td data-label="Comments">{feedback.Comments__c}</td>
+                                                    <td data-label="Date">{feedback.createdDateFormatted}</td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
+                            <template if:false={recentFeedback.length}>
+                                <p class="slds-text-align_center slds-p-vertical_large">No recent feedback found.</p>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Product Status Tab -->
+                <div if:true={showProducts} class="slds-tabs_default__content">
+                    <div class="slds-box">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Product Status Overview</h3>
+                        <template if:true={productStatus}>
+                            <template if:true={productStatus.length}>
+                                <div class="slds-scrollable_y">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="slds-text-title_caps">Product Name</th>
+                                                <th class="slds-text-title_caps">Product ID</th>
+                                                <th class="slds-text-title_caps">Warranty Status</th>
+                                                <th class="slds-text-title_caps">AMC Status</th>
+                                                <th class="slds-text-title_caps">Active Cases</th>
+                                                <th class="slds-text-title_caps">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={productStatus} for:item="product">
+                                                <tr key={product.Id}>
+                                                    <td data-label="Product Name">{product.Name}</td>
+                                                    <td data-label="Product ID">{product.Product_ID__c}</td>
+                                                    <td data-label="Warranty Status">
+                                                        <span class={product.warrantyClass}>{product.warrantyStatus}</span>
+                                                    </td>
+                                                    <td data-label="AMC Status">
+                                                        <span class={product.amcClass}>{product.amcStatus}</span>
+                                                    </td>
+                                                    <td data-label="Active Cases">{product.activeCases}</td>
+                                                    <td data-label="Actions">
+                                                        <lightning-button label="View" onclick={viewProduct} 
+                                                                        data-product-id={product.Id} variant="neutral" 
+                                                                        size="small"></lightning-button>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
+                            <template if:false={productStatus.length}>
+                                <p class="slds-text-align_center slds-p-vertical_large">No products found.</p>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

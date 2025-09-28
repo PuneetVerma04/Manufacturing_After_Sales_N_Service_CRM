@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Welcome to the Customer Service Portal">
+        <div class="slds-m-around_medium slds-text-align_center">
+            <h1 class="slds-text-heading_large slds-p-bottom_medium">
+                Hello, {userName}!
+            </h1>
+            <p class="slds-text-body_regular slds-p-bottom_medium">
+                This portal helps you manage your service requests
+                and track the status of your cases in one place.
+            </p>
+
+            <lightning-button variant="brand"
+                              label="Raise a Request"
+                              onclick={navigateToRaiseIssue}
+                              class="slds-m-around_small"></lightning-button>
+
+            <lightning-button variant="neutral"
+                              label="My Cases"
+                              onclick={navigateToCases}
+                              class="slds-m-around_small"></lightning-button>
+
+            <lightning-button variant="neutral"
+                              label="Submit Feedback"
+                              onclick={navigateToFeedback}
+                              class="slds-m-around_small"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

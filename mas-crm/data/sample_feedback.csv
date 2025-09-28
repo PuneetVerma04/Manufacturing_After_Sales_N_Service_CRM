@@ -1,0 +1,6 @@
+Name,Rating__c,Comments__c,Service_Case__r.Name
+"FB-1001",5,"Quick and professional service","CASE-0001"
+"FB-1002",4,"Engineer arrived on time, fixed sensor","CASE-0005"
+"FB-1003",3,"Installation took longer than expected","CASE-0006"
+"FB-1004",5,"Excellent support, cleared warranty claim quickly","CASE-0008"
+"FB-1005",2,"Issue recurred after repair","CASE-0004"

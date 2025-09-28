@@ -1,0 +1,140 @@
+<template>
+    <lightning-card title="Manager Dashboard" icon-name="standard:user_role">
+        <div class="slds-p-around_medium">
+
+            <!-- Executive Summary Cards -->
+            <div class="slds-grid slds-gutters slds-m-bottom_large">
+                <template for:each={summaryMetrics} for:item="metric">
+                    <div key={metric.label} class="slds-col slds-size_1-of-5">
+                         <div class="slds-box slds-theme_shade slds-text-align_cente">
+                            <div class="slds-text-heading_large">{metric.value}</div>
+                            <div class="slds-text-body_small">{metric.label}</div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Main Content Tabs -->
+            <div class="slds-tabs_default">
+                <ul class="slds-tabs_default__nav" role="tablist">
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" onclick={switchTab} data-tab="overview">Overview</a>
+                    </li>
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" onclick={switchTab} data-tab="engineers">Engineer Performance</a>
+                    </li>
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" onclick={switchTab} data-tab="sla">SLA Analysis</a>
+                    </li>
+                    <li class="slds-tabs_default__item" role="presentation">
+                        <a class="slds-tabs_default__link" href="#" role="tab" onclick={switchTab} data-tab="feedback">Customer Feedback</a>
+                    </li>
+                </ul>
+
+                <!-- Overview Tab -->
+                <div if:true={showOverview} class="slds-tabs_default__content slds-p-around_small">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Case Status Distribution</h3>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={caseStatusData} for:item="status">
+                                <tr key={status.status}>
+                                    <td>{status.status}</td>
+                                    <td>{status.count}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <h3 class="slds-text-heading_small slds-m-top_large slds-m-bottom_small">Top Products by Service Requests</h3>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Cases</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={topProducts} for:item="product">
+                                <tr key={product.productId}>
+                                    <td>{product.productName}</td>
+                                    <td>{product.caseCount}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Engineer Performance Tab -->
+                <div if:true={showEngineers} class="slds-tabs_default__content slds-p-around_small">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr>
+                                <th>Engineer</th>
+                                <th>Total Cases</th>
+                                <th>Resolved</th>
+                                <th>SLA Breaches</th>
+                                <th>Avg Resolution Time</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={engineerPerformance} for:item="eng">
+                                <tr key={eng.engineerId}>
+                                    <td>{eng.engineerName}</td>
+                                    <td>{eng.totalCases}</td>
+                                    <td>{eng.resolvedCases}</td>
+                                    <td><span class={eng.breachClass}>{eng.slaBreaches}</span></td>
+                                    <td>{eng.avgResolutionTime}</td>
+                                    <td><span class={eng.ratingClass}>{eng.customerRating}/5</span></td>
+                                    <td><span class={eng.statusClass}>{eng.status}</span></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SLA Analysis Tab -->
+                <div if:true={showSla} class="slds-tabs_default__content slds-p-around_small">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-box slds-theme_shade slds-text-align_center">
+                                <div class="slds-text-heading_large slds-text-color_success">{slaAnalysis.complianceRate}%</div>
+                                <div class="slds-text-body_small">SLA Compliance Rate</div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-box slds-theme_shade slds-text-align_center">
+                                <div class="slds-text-heading_large">{slaAnalysis.avgResolutionTime}</div>
+                                <div class="slds-text-body_small">Avg Resolution Time</div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-box slds-theme_shade slds-text-align_center">
+                                <div class="slds-text-heading_large slds-text-color_destructive">{slaAnalysis.breachTrend}</div>
+                                <div class="slds-text-body_small">Breach Trend</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Feedback Tab -->
+                <div if:true={showFeedback} class="slds-tabs_default__content slds-p-around_small">
+                    <template for:each={recentFeedback} for:item="fb">
+                        <div key={fb.Id} class="slds-box slds-m-bottom_small">
+                            <strong>{fb.Service_Case__r.Name}</strong> - <span class={fb.ratingClass}>{fb.Rating__c}/5</span>
+                            <p>{fb.Comments__c}</p>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+        </div>
+    </lightning-card>
+</template>

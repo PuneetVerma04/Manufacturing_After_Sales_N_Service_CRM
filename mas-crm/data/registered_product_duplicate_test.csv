@@ -1,0 +1,3 @@
+Name,Serial_Number__c,Purchase_Date__c,Warranty_Expiry__c,AMC_Expiry__c
+"AC Model A1 - dup","SN-AC-A1001","2024-06-15","2025-06-15","2026-06-15"
+"AC Model A1 - dup2","SN-AC-A1001","2024-06-15","2025-06-15","2026-06-15"
