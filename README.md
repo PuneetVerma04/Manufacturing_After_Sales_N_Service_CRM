@@ -1,46 +1,66 @@
-# 📌 Manufacturing After-Sales & Service CRM (Salesforce Project)
+# Manufacturing After-Sales & Service CRM
 
-This project is a **Salesforce-based CRM solution** designed for manufacturing companies to manage **after-sales service operations** such as product warranty tracking, service requests, field engineer dispatch, and customer feedback.
+## Overview
+The Manufacturing After-Sales & Service CRM is a Salesforce-based solution designed to streamline after-sales services, warranty management, and customer support for manufacturing businesses. This project leverages Salesforce's powerful platform to manage service cases, dispatch engineers, and collect customer feedback efficiently.
 
----
+## Key Features
+- **Service Case Management**: Track and manage customer service cases with detailed information.
+- **Engineer Dispatch**: Automatically assign and dispatch engineers based on proximity and required skills.
+- **Warranty and AMC Tracking**: Manage product warranties and annual maintenance contracts (AMCs).
+- **Customer Feedback**: Collect and analyze feedback to improve service quality.
+- **Custom Reports**: Generate insightful reports for SLA compliance, engineer performance, and customer satisfaction.
 
-## 🔄 Service Lifecycle Streamlined
+## Project Structure
+- **Custom Objects**: Includes `Registered_Product__c`, `Service_Case__c`, `Dispatch__c`, `Feedback__c`, `Engineer__c`, and `Service_Agent__c`.
+- **Apex Classes**: Contains business logic for automation and custom functionalities.
+- **Flows**: Automates processes like engineer assignment and status updates.
+- **Layouts**: Custom layouts for enhanced user experience.
+- **Lightning Web Components (LWCs)**: Modern UI components for dashboards and portals.
 
-- **Product registration & warranty/AMC validation**  
-- **Case management with SLA monitoring**  
-- **Automated engineer assignment (location-based)**  
-- **Dispatch notifications via Salesforce email alerts**  
-- **Customer portal (Experience Cloud) for service tracking**  
-- **Feedback collection after service completion**  
+## Setup Instructions
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/PuneetVerma04/Manufacturing_After_Sales_N_Service_CRM.git
+   cd Manufacturing_After_Sales_N_Service_CRM/mas-crm
+   ```
 
----
+2. **Authorize a Dev Hub**:
+   ```bash
+   sf org login web -d
+   ```
 
-## 🔑 Key Features
+3. **Create a Scratch Org**:
+   ```bash
+   sf org create scratch -f config/project-scratch-def.json -a MAS-Dev
+   ```
 
-- **Custom Data Model**: Products, Service Cases, Engineers, Dispatch Jobs, Feedback  
-- **Automation**: Flows for auto-assignment, SLA alerts, case closure  
-- **Apex Development**: Triggers & Classes for warranty calculation and reporting  
-- **UI Enhancements**: LWCs for Customer Portal, Engineer Dashboard, Feedback Form  
-- **Integrations (Free Demo)**:  
-  - Email alerts (instead of paid SMS APIs)  
-  - Geolocation fields + formulas for nearest engineer calculation  
-  - Named Credentials with mock APIs for secure callouts  
-- **Reports & Dashboards**: SLA compliance, resolution time, engineer performance, product failure analysis  
+4. **Push Source to Scratch Org**:
+   ```bash
+   sf project deploy start
+   ```
 
----
+5. **Assign Permission Sets**:
+   ```bash
+   sf org assign permset -n Manufacturing_After_Sales_N_Service_CRM
+   ```
 
-## 🏆 Value Proposition
+6. **Import Sample Data**:
+   ```bash
+   sf data import tree -p data/sample_data_plan.json
+   ```
 
-This CRM reduces **service delays**, improves **SLA compliance**, and enhances **customer satisfaction** for manufacturing companies, while being fully **demo-ready in a free Salesforce Developer Org** without requiring paid third-party integrations.  
+7. **Open the Org**:
+   ```bash
+   sf org open
+   ```
 
----
+## Documentation
+- **Data Dictionary**: Refer to `data-dictionary.md` for detailed information about custom objects and fields.
+- **Flows and Automation**: See `force-app/main/default/flows` for automation details.
+- **Apex Classes**: Business logic is located in `force-app/main/default/classes`.
 
-## 🚀 Tech Stack
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request.
 
-- Salesforce Service Cloud  
-- Lightning Web Components (LWC)  
-- Apex (Triggers, Classes, SOQL)  
-- Flows & Process Automation  
-- Experience Cloud (Customer Portal)  
-
-
+## License
+This project is licensed under the MIT License. See `LICENSE` for details.
