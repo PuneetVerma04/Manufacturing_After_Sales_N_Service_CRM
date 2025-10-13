@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Deadline_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    SLA_Deadline__c &lt; NOW(),
+    ISCHANGED(SLA_Deadline__c)
+)</errorConditionFormula>
+    <errorDisplayField>SLA_Deadline__c</errorDisplayField>
+    <errorMessage>SLA deadline cannot be set in the past</errorMessage>
+</ValidationRule>

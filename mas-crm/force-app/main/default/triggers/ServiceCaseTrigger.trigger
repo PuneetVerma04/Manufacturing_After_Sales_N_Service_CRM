@@ -41,4 +41,3 @@ trigger ServiceCaseTrigger on Service_Case__c (before update, after insert, afte
     if(!agentNotify.isEmpty())
         NotificationService.sendAgentNotificationForCase(agentNotify);
 }
-

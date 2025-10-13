@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <decisions>
+        <name>Is_Status_Still_New</name>
+        <label>Is Status Still New</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Still_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_Status_to_Waiting_For_Customer</targetReference>
+            </connector>
+            <label>Still New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Still_Waiting_For_Customer</name>
+        <label>Still Waiting For Customer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Still_Waiting</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_Status_to_Closed</targetReference>
+            </connector>
+            <label>Still Waiting</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Change Status of the Service Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Change Status of the Service Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Change_Status_to_Closed</name>
+        <label>Change Status to Closed</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Change_Status_to_Waiting_For_Customer</name>
+        <label>Change Status to Waiting For Customer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Waiting for Customer</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <object>Service_Case__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Two_days_after_Creation</name>
+            <connector>
+                <targetReference>Is_Status_Still_New</targetReference>
+            </connector>
+            <label>Two days after Creation</label>
+            <offsetNumber>2</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <scheduledPaths>
+            <name>Seven_Days_After_Creation</name>
+            <connector>
+                <targetReference>Still_Waiting_For_Customer</targetReference>
+            </connector>
+            <label>Seven Days After Creation</label>
+            <offsetNumber>7</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

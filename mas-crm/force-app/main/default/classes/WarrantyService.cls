@@ -31,5 +31,3 @@ public with sharing class WarrantyService {
         return ws;
     }
 }
-
-

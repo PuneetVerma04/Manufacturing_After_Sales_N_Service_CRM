@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AMC_Expiry_after_Purchase</fullName>
+    <active>true</active>
+    <errorConditionFormula>Purchase_Date__c &gt;  AMC_Expiry__c</errorConditionFormula>
+    <errorMessage>AMC Expiry must be after the Purchase Date</errorMessage>
+</ValidationRule>

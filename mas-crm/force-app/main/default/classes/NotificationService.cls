@@ -270,5 +270,3 @@ public with sharing class NotificationService {
         return out;
     }
 }
-
-

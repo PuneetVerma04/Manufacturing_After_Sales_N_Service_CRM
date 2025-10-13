@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Defective__c</fullName>
-    <label>Defective</label>
-    <type>Checkbox</type>
     <defaultValue>false</defaultValue>
     <description>Indicates if the product is defective and requires service</description>
+    <externalId>false</externalId>
+    <label>Defective</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
 </CustomField>

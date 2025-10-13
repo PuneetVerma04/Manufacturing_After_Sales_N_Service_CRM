@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>
-    <members>*</members>
+    <members>Registered_Product__c</members>
+    <members>Service_Case__c</members>
+    <members>Dispatch__c</members>
+    <members>Feedback__c</members>
+    <members>Engineer__c</members>
+    <members>Service_Agent__c</members>
+    <members>Error_Log__c</members>
     <name>CustomObject</name>
+  </types>
+  <types>
+    <members>Case_Status_Transition__mdt</members>
+    <name>CustomMetadata</name>
+  </types>
+  <types>
+    <members>Registered_Product__c-Registered Product Layout</members>
+    <members>Service_Case__c-Service Case Layout</members>
+    <members>Service_Case__c-Customer Service Case Layout</members>
+    <members>Dispatch__c-Dispatch Layout</members>
+    <members>Feedback__c-Feedback Layout</members>
+    <members>Engineer__c-Engineer Layout</members>
+    <members>Service_Agent__c-Service Agent Layout</members>
+    <name>Layout</name>
   </types>
   <types>
     <members>*</members>
@@ -11,10 +31,6 @@
   <types>
     <members>*</members>
     <name>FlowDefinition</name>
-  </types>
-  <types>
-    <members>*</members>
-    <name>Layout</name>
   </types>
   <types>
     <members>*</members>

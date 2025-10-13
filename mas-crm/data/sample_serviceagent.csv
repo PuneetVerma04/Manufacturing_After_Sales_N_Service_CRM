@@ -1,9 +1,4 @@
-Name__c,Email_ID__c,Active__c,Region__c,Service_Case__r.Name
-"Amit Sharma","amit.sharma@example.com",TRUE,"North","Case-001"
-"Neha Verma","neha.verma@example.com",TRUE,"West","Case-002"
-"Ravi Kumar","ravi.kumar@example.com",FALSE,"East",""
-"Sunil Joshi","sunil.joshi@example.com",TRUE,"South","Case-003"
-"Pooja Iyer","pooja.iyer@example.com",TRUE,"Central","Case-004"
-"Anita Desai","anita.desai@example.com",FALSE,"North",""
-"Vivek Rao","vivek.rao@example.com",TRUE,"West","Case-005"
-"Meera Gupta","meera.gupta@example.com",TRUE,"South",""
+Name__c,Email_ID__c,Active__c,Region__c
+"AGT-0003","agent.meena@example.com",TRUE,"North"
+"AGT-0004","agent.arjun@example.com",TRUE,"South"
+"AGT-0005","agent.ravi@example.com",FALSE,"West"

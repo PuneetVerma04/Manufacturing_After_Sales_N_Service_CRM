@@ -51,5 +51,3 @@ public with sharing class ReportingService {
         return out;
     }
 }
-
-

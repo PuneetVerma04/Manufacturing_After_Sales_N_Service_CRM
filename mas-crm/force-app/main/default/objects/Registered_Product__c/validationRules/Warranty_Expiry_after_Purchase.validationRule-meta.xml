@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Warranty_Expiry_after_Purchase</fullName>
+    <active>true</active>
+    <errorConditionFormula>Warranty_Expiry__c  &lt;=  Purchase_Date__c</errorConditionFormula>
+    <errorDisplayField>Warranty_Expiry__c</errorDisplayField>
+    <errorMessage>Warranty Expiry must be after Purchase Date</errorMessage>
+</ValidationRule>

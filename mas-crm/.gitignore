@@ -1,0 +1,77 @@
+# ===========================
+# Salesforce / SFDX Files
+# ===========================
+
+# Salesforce caches
+.sf/
+.sfdx/
+.localdevserver/
+deploy-options.json
+
+# Salesforce Scratch Org / Sandbox local configs
+*.scratch-def.json
+*.json
+
+# Lightning Web Components (LWC) JS autocomplete cache
+**/lwc/jsconfig.json
+
+# LWC Jest coverage reports
+coverage/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node dependencies
+node_modules/
+
+# Apex PMD cache
+.pmdCache
+
+# ESLint cache
+.eslintcache
+
+# Salesforce CLI env
+*.env
+
+# OS files
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Python Salesforce Functions
+**/__pycache__/
+**/.venv/
+**/venv/
+
+# VSCode / IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Temp / backup files
+*.tmp
+*.swp
+*.bak
+
+# JetBrains IDE folders
+*.iml
+out/
+
+# Optional: if using npm / yarn lock for dependency tracking
+# Keep package.json and package-lock.json / yarn.lock
+# But ignore node_modules as above
+
+# Ignore local test coverage reports
+*.lcov
