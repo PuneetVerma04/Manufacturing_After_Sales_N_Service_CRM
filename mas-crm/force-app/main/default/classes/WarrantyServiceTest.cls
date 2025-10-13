@@ -25,7 +25,7 @@ private class WarrantyServiceTest {
         // Product 1: Both warranty and AMC active
         testProducts.add(new Registered_Product__c(
             Name = 'Active Warranty Product',
-            Serial_Name__c = 'AWP-001',
+            Serial_Number__c = 'AWP-001',
             Purchase_Date__c = Date.today().addDays(-100),
             Warranty_Expiry__c = Date.today().addDays(100), // Active warranty
             AMC_Expiry__c = Date.today().addDays(200), // Active AMC
@@ -35,7 +35,7 @@ private class WarrantyServiceTest {
         // Product 2: Warranty expired, AMC active
         testProducts.add(new Registered_Product__c(
             Name = 'Expired Warranty Product',
-            Serial_Name__c = 'EWP-002',
+            Serial_Number__c = 'EWP-002',
             Purchase_Date__c = Date.today().addDays(-500),
             Warranty_Expiry__c = Date.today().addDays(-50), // Expired warranty
             AMC_Expiry__c = Date.today().addDays(100), // Active AMC
@@ -45,7 +45,7 @@ private class WarrantyServiceTest {
         // Product 3: Both warranty and AMC expired
         testProducts.add(new Registered_Product__c(
             Name = 'Fully Expired Product',
-            Serial_Name__c = 'FEP-003',
+            Serial_Number__c = 'FEP-003',
             Purchase_Date__c = Date.today().addDays(-800),
             Warranty_Expiry__c = Date.today().addDays(-200), // Expired warranty
             AMC_Expiry__c = Date.today().addDays(-100), // Expired AMC
@@ -55,7 +55,7 @@ private class WarrantyServiceTest {
         // Product 4: Null warranty and AMC dates
         testProducts.add(new Registered_Product__c(
             Name = 'No Coverage Product',
-            Serial_Name__c = 'NCP-004',
+            Serial_Number__c = 'NCP-004',
             Purchase_Date__c = Date.today().addDays(-100),
             Warranty_Expiry__c = null, // No warranty
             AMC_Expiry__c = null, // No AMC
@@ -65,7 +65,7 @@ private class WarrantyServiceTest {
         // Product 5: Warranty active, no AMC
         testProducts.add(new Registered_Product__c(
             Name = 'Warranty Only Product',
-            Serial_Name__c = 'WOP-005',
+            Serial_Number__c = 'WOP-005',
             Purchase_Date__c = Date.today().addDays(-50),
             Warranty_Expiry__c = Date.today().addDays(150), // Active warranty
             AMC_Expiry__c = null, // No AMC
@@ -80,7 +80,7 @@ private class WarrantyServiceTest {
      */
     @IsTest
     static void testEvaluateWithIdActiveWarrantyAndAMC() {
-        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Name__c = 'AWP-001' LIMIT 1];
+        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Number__c = 'AWP-001' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product.Id);
@@ -97,7 +97,7 @@ private class WarrantyServiceTest {
      */
     @IsTest
     static void testEvaluateWithIdExpiredWarrantyActiveAMC() {
-        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Name__c = 'EWP-002' LIMIT 1];
+        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Number__c = 'EWP-002' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product.Id);
@@ -114,7 +114,7 @@ private class WarrantyServiceTest {
      */
     @IsTest
     static void testEvaluateWithIdBothExpired() {
-        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Name__c = 'FEP-003' LIMIT 1];
+        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Number__c = 'FEP-003' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product.Id);
@@ -131,7 +131,7 @@ private class WarrantyServiceTest {
      */
     @IsTest
     static void testEvaluateWithIdNullCoverage() {
-        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Name__c = 'NCP-004' LIMIT 1];
+        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Number__c = 'NCP-004' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product.Id);
@@ -148,7 +148,7 @@ private class WarrantyServiceTest {
      */
     @IsTest
     static void testEvaluateWithIdWarrantyOnly() {
-        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Name__c = 'WOP-005' LIMIT 1];
+        Registered_Product__c product = [SELECT Id FROM Registered_Product__c WHERE Serial_Number__c = 'WOP-005' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product.Id);
@@ -182,7 +182,7 @@ private class WarrantyServiceTest {
     static void testEvaluateWithRecordActiveCoverage() {
         Registered_Product__c product = [SELECT Id, Warranty_Expiry__c, AMC_Expiry__c 
                                         FROM Registered_Product__c 
-                                        WHERE Serial_Name__c = 'AWP-001' LIMIT 1];
+                                        WHERE Serial_Number__c = 'AWP-001' LIMIT 1];
         
         Test.startTest();
         WarrantyService.WarrantyStatus result = WarrantyService.evaluate(product);
@@ -243,7 +243,7 @@ private class WarrantyServiceTest {
         
         Registered_Product__c todayProduct = new Registered_Product__c(
             Name = 'Expiring Today Product',
-            Serial_Name__c = 'ETP-006',
+            Serial_Number__c = 'ETP-006',
             Purchase_Date__c = Date.today().addDays(-365),
             Warranty_Expiry__c = Date.today(), // Expires today
             AMC_Expiry__c = Date.today(), // Expires today

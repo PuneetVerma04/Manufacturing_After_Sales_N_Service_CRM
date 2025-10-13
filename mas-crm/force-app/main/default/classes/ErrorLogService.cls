@@ -17,7 +17,7 @@ public with sharing class ErrorLogService {
      * @description Enum for error types
      */
     public enum ErrorType {
-        EXCEPTION, DML_ERROR, SOQL_ERROR, VALIDATION_ERROR, 
+        ERROR_EXCEPTION, DML_ERROR, SOQL_ERROR, VALIDATION_ERROR, 
         INTEGRATION_ERROR, BUSINESS_LOGIC_ERROR, SYSTEM_ERROR
     }
     
@@ -138,12 +138,12 @@ public with sharing class ErrorLogService {
             
             for (ExceptionContext ctx : exceptions) {
                 Error_Log__c errorLog = new Error_Log__c(
-                    Error_Message__c = ctx.exception.getMessage(),
-                    Error_Type__c = getErrorTypeFromException(ctx.exception),
+                    Error_Message__c = ctx.errorException.getMessage(),
+                    Error_Type__c = getErrorTypeFromException(ctx.errorException),
                     Severity__c = ctx.severity.name(),
                     Class_Name__c = ctx.className,
                     Method_Name__c = ctx.methodName,
-                    Stack_Trace__c = ctx.exception.getStackTraceString(),
+                    Stack_Trace__c = ctx.errorException.getStackTraceString(),
                     User_Context__c = UserInfo.getUserId(),
                     Record_Context__c = ctx.recordContext
                 );
@@ -271,14 +271,14 @@ public with sharing class ErrorLogService {
      * @description Wrapper class for exception context in bulk operations.
      */
     public class ExceptionContext {
-        public Exception exception;
+        public Exception errorException;
         public String className;
         public String methodName;
         public Severity severity;
         public String recordContext;
         
         public ExceptionContext(Exception ex, String cls, String method, Severity sev) {
-            this.exception = ex;
+            this.errorException = ex;
             this.className = cls;
             this.methodName = method;
             this.severity = sev;
@@ -286,7 +286,7 @@ public with sharing class ErrorLogService {
         }
         
         public ExceptionContext(Exception ex, String cls, String method, Severity sev, String context) {
-            this.exception = ex;
+            this.errorException = ex;
             this.className = cls;
             this.methodName = method;
             this.severity = sev;

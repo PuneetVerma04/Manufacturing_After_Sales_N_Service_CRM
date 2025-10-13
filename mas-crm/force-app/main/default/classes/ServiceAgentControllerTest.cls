@@ -24,7 +24,7 @@ private class ServiceAgentControllerTest {
         for (Integer i = 1; i <= 3; i++) {
             testProducts.add(new Registered_Product__c(
                 Name = 'Test Product ' + i,
-                Serial_Name__c = 'TEST-00' + i,
+                Serial_Number__c = 'TEST-00' + i,
                 Purchase_Date__c = Date.today().addDays(-100),
                 Warranty_Expiry__c = i == 1 ? Date.today().addDays(-10) : Date.today().addDays(265), // First product warranty expired
                 AMC_Expiry__c = Date.today().addDays(365),

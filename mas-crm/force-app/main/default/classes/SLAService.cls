@@ -8,7 +8,7 @@ public with sharing class SLAService {
         // NOTE: Including 'Resolved' status in the terminal statuses for accuracy
         Set<String> terminalStatuses = new Set<String>{'Closed', 'Resolved'}; 
         return [
-            SELECT Id, Name, Subject__c, Priority__c, SLA_Deadline__c,
+            SELECT Id, Name, Subject__c, Priority__c, Status__c, SLA_Deadline__c,
                    Engineer_Assigned__r.Name,
                    Registered_Product__r.Name
             FROM Service_Case__c

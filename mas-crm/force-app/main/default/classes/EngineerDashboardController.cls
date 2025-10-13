@@ -56,16 +56,29 @@ public with sharing class EngineerDashboardController {
     @AuraEnabled
     public static String updateJobStatus(String caseId, String newStatus, String comments) {
         try {
-            Service_Case__c caseToUpdate = [
+            // Validate input parameters
+            if (String.isBlank(caseId) || String.isBlank(newStatus)) {
+                throw new AuraHandledException('Error updating job status: Case ID and new status are required');
+            }
+            
+            List<Service_Case__c> cases = [
                 SELECT Id, Status__c, Engineer_Feedback__c
                 FROM Service_Case__c
                 WHERE Id = :caseId
                 LIMIT 1
             ];
+            
+            if (cases.isEmpty()) {
+                throw new AuraHandledException('Error updating job status: Case not found with ID ' + caseId);
+            }
+            
+            Service_Case__c caseToUpdate = cases[0];
 
             Map<String, String> validTransitions = new Map<String, String>{
-                'Engineer Dispatched' => 'In Progress',
-                'In Progress' => 'Resolved'
+                'New' => 'In Progress',
+                'In Progress' => 'Resolved',
+                'Waiting for Customer' => 'In Progress',
+                'Submitted for Approval' => 'In Progress'
             };
 
             String currentStatus = caseToUpdate.Status__c;
@@ -73,7 +86,7 @@ public with sharing class EngineerDashboardController {
             if (!validTransitions.containsKey(currentStatus) ||
                 validTransitions.get(currentStatus) != newStatus) {
                 throw new AuraHandledException(
-                    'Invalid status change. Allowed flow: Engineer Dispatched → In Progress → Resolved.'
+                    'Invalid status change. Valid transitions: New/Waiting for Customer/Submitted for Approval → In Progress → Resolved.'
                 );
             }
 

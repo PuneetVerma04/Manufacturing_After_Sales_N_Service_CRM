@@ -22,7 +22,7 @@ private class SLAServiceTest {
         // Create test registered product
         Registered_Product__c testProduct = new Registered_Product__c(
             Name = 'Test Product',
-            Serial_Name__c = 'TEST-001',
+            Serial_Number__c = 'TEST-001',
             Purchase_Date__c = Date.today().addDays(-100),
             Warranty_Expiry__c = Date.today().addDays(265),
             AMC_Expiry__c = Date.today().addDays(365),
@@ -108,35 +108,38 @@ private class SLAServiceTest {
         
         insert testCases;
         
-        // Create SLA Escalation Queue for notification testing
-        Group slaQueue = new Group(
-            Name = 'SLAEscalationQueue',
-            Type = 'Queue'
-        );
-        insert slaQueue;
-        
-        // Create test user for queue membership
-        Profile standardProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-        User testUser = new User(
-            FirstName = 'Test',
-            LastName = 'Manager',
-            Email = 'test.manager@example.com',
-            Username = 'test.manager@example.com.test',
-            Alias = 'tmgr',
-            ProfileId = standardProfile.Id,
-            TimeZoneSidKey = 'America/New_York',
-            LocaleSidKey = 'en_US',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US'
-        );
-        insert testUser;
-        
-        // Add user to queue
-        GroupMember queueMember = new GroupMember(
-            GroupId = slaQueue.Id,
-            UserOrGroupId = testUser.Id
-        );
-        insert queueMember;
+        // Setup objects must be created separately to avoid mixed DML
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            // Create SLA Escalation Queue for notification testing
+            Group slaQueue = new Group(
+                Name = 'SLAEscalationQueue',
+                Type = 'Queue'
+            );
+            insert slaQueue;
+            
+            // Create test user for queue membership
+            Profile standardProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+            User testUser = new User(
+                FirstName = 'Test',
+                LastName = 'Manager',
+                Email = 'test.manager@example.com',
+                Username = 'test.manager@example.com.test',
+                Alias = 'tmgr',
+                ProfileId = standardProfile.Id,
+                TimeZoneSidKey = 'America/New_York',
+                LocaleSidKey = 'en_US',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'en_US'
+            );
+            insert testUser;
+            
+            // Add user to queue
+            GroupMember queueMember = new GroupMember(
+                GroupId = slaQueue.Id,
+                UserOrGroupId = testUser.Id
+            );
+            insert queueMember;
+        }
     }
     
     /**
@@ -207,8 +210,10 @@ private class SLAServiceTest {
      */
     @IsTest
     static void testNotifySLABreachesNoQueue() {
-        // Delete the SLA queue
-        delete [SELECT Id FROM Group WHERE Name = 'SLAEscalationQueue'];
+        // Delete the SLA queue - using runAs for setup object deletion
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            delete [SELECT Id FROM Group WHERE Name = 'SLAEscalationQueue'];
+        }
         
         Test.startTest();
         SLAService.notifySLABreaches();
